@@ -2287,3 +2287,63 @@
     opacity: 0.88;
   }
 }
+
+@layer components {
+  /* Settings submenus. Video.js moves each submenu beside the root menu and
+     marks the root inert (data-child-open) while one is open; hide the root
+     then, so only the active, interactive list is on screen. */
+  .sr-menu-content:not([data-submenu])[data-child-open] {
+    display: none;
+  }
+
+  .sr-menu-content[data-submenu][data-open] {
+    animation: sr-submenu-in 160ms var(--sr-ease-out, ease-out);
+  }
+
+  .sr-menu-content:not([data-submenu]):not([data-child-open]) {
+    animation: sr-submenu-back 160ms var(--sr-ease-out, ease-out);
+  }
+
+  @keyframes sr-submenu-in {
+    from { opacity: 0; transform: translateX(8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes sr-submenu-back {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* The check marks the selected option only: the row hover animation must
+     not light it on whichever row is under the pointer. */
+  .sr-menu-radio-item .sr-menu-indicator {
+    animation: none !important;
+  }
+
+  /* Hints such as "AUTO (720P)" stay on one line */
+  .sr-menu-popup {
+    min-width: 232px;
+  }
+
+  .sr-menu-hint {
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sr-menu-content[data-submenu][data-open],
+    .sr-menu-content:not([data-submenu]):not([data-child-open]) {
+      animation: none;
+    }
+  }
+}
+
+@layer components {
+  /* Video.js marks the selected radio item with aria-checked, not data-checked */
+  .sr-menu-radio-item[aria-checked='true'] {
+    color: var(--sr-accent);
+  }
+
+  .sr-menu-radio-item[aria-checked='true'] .sr-menu-indicator {
+    opacity: 1;
+  }
+}
