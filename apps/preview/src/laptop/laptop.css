@@ -1,0 +1,363 @@
+@import '@fontsource/big-shoulders-display/700';
+
+:root {
+  --lt-bg: #070807;
+  --lt-text: #eae6df;
+  --lt-muted: #a9a59c; /* ≥ 7:1 on --lt-bg */
+  --lt-line: rgba(234, 230, 223, 0.16);
+  --lt-font-display: 'Big Shoulders Display', 'Chakra Petch', sans-serif;
+  --lt-font-data: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--lt-bg);
+  color: var(--lt-text);
+  font-family: var(--lt-font-data);
+  overflow: hidden;
+}
+
+.lt-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Vignette + film grain over the 3D, under the UI */
+.lt-atmos {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 38%, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.lt-atmos::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: lt-grain 0.9s steps(3) infinite;
+}
+
+@keyframes lt-grain {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-3%, 2%); }
+  66% { transform: translate(2%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* The real player, laid exactly over the 3D screen */
+.lt-screen {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  width: min(88vw, 900px);
+  aspect-ratio: 16 / 9;
+  z-index: 2;
+  opacity: 0;
+  background: #030403;
+  transition: opacity 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lt-screen[data-state='on'] {
+  opacity: 1;
+}
+
+/* Glass: faint scanlines + inner shadow. Pointer-transparent. */
+.lt-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.8), inset 0 0 40px rgba(0, 0, 0, 0.45);
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px);
+  z-index: 1;
+}
+
+.lt-screen .lt-player,
+.lt-screen video-player,
+.lt-screen media-i18n {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Fullscreen lives in the top layer; drop the glass so it never overlays it. */
+.lt-screen:has(:fullscreen)::after {
+  display: none;
+}
+
+.lt-no-webgl .lt-screen {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+/* ---------- Intro: boot screen riding the 3D screen during the dolly ---------- */
+.lt-boot {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  container-type: inline-size;
+  background: #030403;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.lt-boot[data-state='on'] {
+  opacity: 1;
+  animation: lt-crt-on 260ms ease-out;
+}
+
+/* Hold the boot screen until the player has faded in over it: no dark dip */
+.lt-boot[data-state='off'] {
+  opacity: 0;
+  transition: opacity 200ms ease-in 420ms;
+}
+
+@keyframes lt-crt-on {
+  0% { transform: scaleY(0.01) scaleX(0.6); filter: brightness(4); }
+  55% { transform: scaleY(0.02) scaleX(1); filter: brightness(3); }
+  100% { transform: none; filter: none; }
+}
+
+.lt-boot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 3px);
+}
+
+.lt-boot-inner {
+  position: absolute;
+  inset: 8% 7%;
+  font-family: var(--lt-font-data);
+  font-size: 3.1cqi;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: #d9d5cc;
+  text-shadow: 0 0 0.6em rgba(217, 213, 204, 0.35);
+}
+
+.lt-boot-inner p {
+  display: flex;
+  gap: 0.6em;
+  margin: 0;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.lt-boot-inner p span {
+  flex: none;
+}
+
+.lt-boot-inner p i {
+  flex: 1;
+  border-bottom: 0.12em dotted rgba(217, 213, 204, 0.35);
+  margin-bottom: 0.55em;
+}
+
+.lt-boot-head {
+  margin-bottom: 1em !important;
+  font-family: var(--lt-font-display);
+  font-weight: 700;
+  font-size: 1.5em;
+  letter-spacing: 0.16em;
+}
+
+.lt-boot-head span {
+  color: #8f8b83;
+  font-size: 0.6em;
+}
+
+.lt-boot[data-state='on'] .lt-boot-inner p {
+  animation: lt-line 1ms forwards;
+}
+.lt-boot[data-state='on'] .lt-boot-inner p:nth-child(1) { animation-delay: 120ms; }
+.lt-boot[data-state='on'] .lt-boot-inner p:nth-child(2) { animation-delay: 420ms; }
+.lt-boot[data-state='on'] .lt-boot-inner p:nth-child(3) { animation-delay: 680ms; }
+.lt-boot[data-state='on'] .lt-boot-inner p:nth-child(4) { animation-delay: 980ms; }
+.lt-boot[data-state='on'] .lt-boot-inner p:nth-child(5) { animation-delay: 1260ms; }
+
+@keyframes lt-line {
+  to { opacity: 1; }
+}
+
+.lt-boot-cursor {
+  animation: lt-blink 0.5s steps(1) infinite;
+}
+
+@keyframes lt-blink {
+  50% { opacity: 0; }
+}
+
+.lt-skip {
+  position: fixed;
+  z-index: 4;
+  right: 16px;
+  top: 16px;
+  font: 500 11px/1 var(--lt-font-data);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lt-text);
+  background: rgba(7, 8, 7, 0.6);
+  border: 1px solid var(--lt-line);
+  min-height: 40px;
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.lt-skip:focus-visible {
+  outline: 2px solid var(--lt-text);
+  outline-offset: 3px;
+}
+
+/* Footer waits for the intro */
+.lt-footer {
+  transition: opacity 500ms ease 150ms;
+}
+body:not([data-intro='done']) .lt-footer {
+  opacity: 0;
+}
+
+/* Footer: title + credits, small */
+.lt-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 14px 16px max(14px, env(safe-area-inset-bottom));
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  text-align: center;
+  background: linear-gradient(to top, rgba(7, 8, 7, 0.92) 40%, rgba(7, 8, 7, 0));
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lt-muted);
+}
+
+.lt-title {
+  margin: 0;
+  font-family: var(--lt-font-display);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  color: var(--lt-text);
+}
+
+.lt-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px 14px;
+  margin: 0;
+}
+
+.lt-row a {
+  color: var(--lt-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--lt-line);
+  padding: 6px 0 2px;
+}
+
+.lt-row a:hover {
+  border-bottom-color: var(--lt-text);
+}
+
+.lt-sep {
+  opacity: 0.5;
+}
+
+.lt-feeds {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.lt-feeds button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--lt-muted);
+  background: transparent;
+  border: 1px solid var(--lt-line);
+  min-height: 32px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.lt-feeds button[aria-pressed='true'] {
+  color: var(--lt-bg);
+  background: var(--lt-text);
+  border-color: var(--lt-text);
+}
+
+.lt-footer :focus-visible {
+  outline: 2px solid var(--lt-text);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 719px) {
+  .lt-footer {
+    font-size: 10px;
+  }
+  .lt-feeds button {
+    min-height: 40px;
+  }
+  .lt-sep {
+    display: none;
+  }
+}
+
+/* Short viewports (phone landscape, small laptops): one compact strip */
+@media (max-height: 600px) {
+  .lt-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2px 16px;
+    padding: 4px 12px max(4px, env(safe-area-inset-bottom));
+    font-size: 10px;
+  }
+  .lt-title {
+    font-size: 12px;
+  }
+  .lt-feeds button {
+    min-height: 32px;
+  }
+  .lt-row a {
+    padding: 4px 0 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-atmos::after {
+    animation: none;
+  }
+  .lt-screen {
+    transition: none;
+  }
+}

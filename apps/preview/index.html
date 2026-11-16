@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#070807" />
+    <title>Rugged MK-1 // A field-terminal skin for Video.js</title>
+    <meta name="description" content="Rugged MK-1: a field-terminal skin for the Video.js v10 player, built to hold up over any footage, on any screen. By Pedro Costa." />
+  </head>
+  <body>
+    <canvas id="lt-canvas" class="lt-canvas" aria-hidden="true"></canvas>
+    <div class="lt-atmos" aria-hidden="true"></div>
+
+    <main>
+      <h1 class="sr-only">Rugged MK-1, a Video.js v10 skin</h1>
+      <div id="lt-boot" class="lt-boot" aria-hidden="true">
+        <div class="lt-boot-inner">
+          <p class="lt-boot-head">RUGGED MK-1 <span>// BIOS 10.4</span></p>
+          <p><span>POST</span><i></i><b>OK</b></p>
+          <p><span>CRYPTO MODULE</span><i></i><b>OK</b></p>
+          <p><span>SAT UPLINK</span><i></i><b>ACQUIRED</b></p>
+          <p><span>LOAD SKIN // MK-1</span><i></i><b class="lt-boot-cursor">█</b></p>
+        </div>
+      </div>
+      <button type="button" id="lt-skip" class="lt-skip">Skip intro</button>
+      <div id="lt-screen" class="lt-screen" inert>
+        <div class="lt-player" id="player-mount"></div>
+      </div>
+    </main>
+
+    <footer class="lt-footer">
+      <p class="lt-title" aria-hidden="true">Rugged MK-1</p>
+      <p class="lt-row">
+        <span>Video.js v10 skin</span>
+        <span class="lt-sep" aria-hidden="true">/</span>
+        <span>Pedro Costa, Creative Developer</span>
+        <span class="lt-sep" aria-hidden="true">/</span>
+        <a href="https://pedrocosta.design" target="_blank" rel="noreferrer">pedrocosta.design</a>
+        <span class="lt-sep" aria-hidden="true">/</span>
+        <span>Footage: NASA</span>
+      </p>
+      <div class="lt-row">
+        <span class="lt-feeds" role="group" aria-label="Test footage" data-switch="feed">
+          <button type="button" data-value="film" aria-pressed="true">CH-01 Film</button>
+          <button type="button" data-value="bright" aria-pressed="false">CH-02 Bright</button>
+          <button type="button" data-value="dark" aria-pressed="false">CH-03 Dark</button>
+        </span>
+        <a href="./console.html">Console view</a>
+        <a href="./workbench.html">Workbench</a>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/laptop/main.ts"></script>
+  </body>
+</html>

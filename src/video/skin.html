@@ -1,0 +1,405 @@
+<media-container class="media-skin media-container media-video sr-skin" data-theme="sitrep" data-preset="video" data-hud-tint="mono" data-optic="std">
+  <!-- Add a compatible media component here. -->
+
+  <media-poster class="media-poster">
+    <img alt="" decoding="async" class="media-poster-image">
+  </media-poster>
+
+  <!-- Lifts captions above the control panel while controls are visible -->
+  <sitrep-caption-lift></sitrep-caption-lift>
+
+  <!-- Thermal optic overlay: sensor noise + scanlines, only when an optic mode is on -->
+  <div class="sr-optic-fx" aria-hidden="true"></div>
+
+  <!-- Always-visible low-contrast corner brackets -->
+  <div class="sr-frame-brackets" aria-hidden="true">
+    <span class="sr-bracket sr-bracket-tl"></span>
+    <span class="sr-bracket sr-bracket-tr"></span>
+    <span class="sr-bracket sr-bracket-bl"></span>
+    <span class="sr-bracket sr-bracket-br"></span>
+  </div>
+
+  <!-- Compact timecode that remains visible when HUD collapses to idle -->
+  <sitrep-idle-time class="sr-idle-time"></sitrep-idle-time>
+
+  <media-error-dialog>
+    <media-dialog-backdrop class="media-dialog-backdrop sr-dialog-backdrop"></media-dialog-backdrop>
+    <media-dialog-popup class="media-dialog-popup sr-dialog-popup">
+      <div class="sr-error-badge">
+        <span class="sr-error-dot" aria-hidden="true"></span>
+        <span>ALERT // LINK FAILURE</span>
+      </div>
+      <media-dialog-title class="media-dialog-title sr-dialog-title"></media-dialog-title>
+      <media-dialog-description class="media-dialog-description sr-dialog-desc"></media-dialog-description>
+      <media-dialog-close class="media-button media-dialog-close sr-dialog-close"></media-dialog-close>
+    </media-dialog-popup>
+  </media-error-dialog>
+
+  <media-controls>
+    <media-controls-backdrop class="sr-backdrop"></media-controls-backdrop>
+
+    <!-- SIGNAL LOST / REACQUIRING buffering state -->
+    <media-controls-group class="sr-buffering-layer">
+      <media-buffering-indicator class="sr-buffering-indicator">
+        <div class="sr-scanlines" aria-hidden="true"></div>
+        <div class="sr-signal-lost-card">
+          <media-icon family="sitrep" name="spinner" class="sr-signal-spinner"></media-icon>
+          <div class="sr-signal-text">
+            <span class="sr-signal-title">CARRIER LOST</span>
+            <span class="sr-signal-sub">REACQUIRING TELEMETRY…</span>
+          </div>
+        </div>
+      </media-buffering-indicator>
+    </media-controls-group>
+
+    <media-controls-content class="sr-controls-content">
+      <!-- Unboxed targeting-display corner data -->
+      <sitrep-corners class="sr-corners"></sitrep-corners>
+      <media-tooltip-group>
+        <!-- Left Rail: Secondary Actions (Desktop / Tablet) -->
+        <media-controls-group class="sr-left-rail" aria-label="Secondary controls">
+          <media-captions-button class="sr-btn sr-rail-btn" id="sr-rail-captions">
+            <media-icon family="sitrep" name="captions-off" class="sr-icon sr-cap-off"></media-icon>
+            <media-icon family="sitrep" name="captions-on" class="sr-icon sr-cap-on"></media-icon>
+          </media-captions-button>
+          <media-tooltip trigger="sr-rail-captions" side="right" class="media-popup media-popup-safe-area sr-tooltip">
+            <media-tooltip-label></media-tooltip-label>
+            <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+          </media-tooltip>
+
+          <media-playback-rate-button class="sr-btn sr-rail-btn sr-rate-btn" id="sr-rail-rate"></media-playback-rate-button>
+          <media-tooltip trigger="sr-rail-rate" side="right" class="media-popup media-popup-safe-area sr-tooltip">
+            <media-tooltip-label></media-tooltip-label>
+            <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+          </media-tooltip>
+
+          <media-pip-button class="sr-btn sr-rail-btn" id="sr-rail-pip">
+            <media-icon family="sitrep" name="pip-enter" class="sr-icon sr-pip-enter"></media-icon>
+            <media-icon family="sitrep" name="pip-exit" class="sr-icon sr-pip-exit"></media-icon>
+          </media-pip-button>
+          <media-tooltip trigger="sr-rail-pip" side="right" class="media-popup media-popup-safe-area sr-tooltip">
+            <media-tooltip-label></media-tooltip-label>
+            <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+          </media-tooltip>
+
+          <media-airplay-button class="sr-btn sr-rail-btn" id="sr-rail-airplay">
+            <media-icon family="sitrep" name="airplay-enter" class="sr-icon sr-airplay-enter"></media-icon>
+            <media-icon family="sitrep" name="airplay-exit" class="sr-icon sr-airplay-exit"></media-icon>
+          </media-airplay-button>
+          <media-tooltip trigger="sr-rail-airplay" side="right" class="media-popup media-popup-safe-area sr-tooltip">
+            <media-tooltip-label></media-tooltip-label>
+            <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+          </media-tooltip>
+
+          <media-cast-button class="sr-btn sr-rail-btn" id="sr-rail-cast">
+            <media-icon family="sitrep" name="cast-enter" class="sr-icon sr-cast-enter"></media-icon>
+            <media-icon family="sitrep" name="cast-exit" class="sr-icon sr-cast-exit"></media-icon>
+          </media-cast-button>
+          <media-tooltip trigger="sr-rail-cast" side="right" class="media-popup media-popup-safe-area sr-tooltip">
+            <media-tooltip-label></media-tooltip-label>
+            <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+          </media-tooltip>
+        </media-controls-group>
+
+        <!-- Center Reticle & Play/Replay Trigger -->
+        <media-buffering-indicator class="sr-center-buffering-wrap">
+          <div class="sr-center-stage">
+            <div class="sr-reticle" aria-hidden="true">
+              <span class="sr-reticle-radar"></span>
+              <span class="sr-reticle-ring"></span>
+              <span class="sr-reticle-cross"></span>
+              <span class="sr-reticle-bracket sr-reticle-bracket-l"></span>
+              <span class="sr-reticle-bracket sr-reticle-bracket-r"></span>
+            </div>
+
+            <media-play-button class="sr-btn sr-center-play" id="sr-center-play">
+              <media-icon family="sitrep" name="restart" class="sr-icon sr-play-restart"></media-icon>
+              <media-icon family="sitrep" name="play" class="sr-icon sr-play-go"></media-icon>
+              <media-icon family="sitrep" name="pause" class="sr-icon sr-play-pause"></media-icon>
+              <span class="sr-end-badge" aria-hidden="true">FEED TERMINATED // REPLAY</span>
+            </media-play-button>
+            <media-tooltip trigger="sr-center-play" disabled side="top" class="media-popup media-popup-safe-area sr-tooltip">
+              <media-tooltip-label></media-tooltip-label>
+              <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+            </media-tooltip>
+          </div>
+        </media-buffering-indicator>
+
+        <!-- Bottom Glass Panel: Ruler Seek + Primary Controls -->
+        <div class="sr-bottom-panel">
+          <div class="sr-ruler-wrap">
+            <div class="sr-ruler-ticks" aria-hidden="true"></div>
+            <sitrep-seek-readout class="sr-seek-readout"></sitrep-seek-readout>
+            <media-time-slider class="media-time-slider sr-time-slider" thumb-alignment="edge">
+              <media-time-slider-chapters class="media-time-slider-chapters sr-chapters">
+                <template>
+                  <div class="media-time-slider-chapter sr-chapter">
+                    <media-slider-track class="media-time-slider-track sr-slider-track">
+                      <media-slider-buffer class="media-time-slider-buffer sr-slider-buffer"></media-slider-buffer>
+                      <media-slider-fill class="media-time-slider-fill sr-slider-fill"></media-slider-fill>
+                    </media-slider-track>
+                  </div>
+                </template>
+              </media-time-slider-chapters>
+              <media-slider-thumb class="media-time-slider-thumb sr-slider-thumb"></media-slider-thumb>
+              <media-slider-preview class="media-time-slider-preview sr-slider-preview">
+                <media-slider-thumbnail class="media-slider-thumbnail sr-slider-thumbnail">
+                  <img alt="" aria-hidden="true" decoding="async" class="media-slider-thumbnail-image">
+                </media-slider-thumbnail>
+                <div class="sr-preview-meta">
+                  <media-slider-value class="sr-preview-time" type="pointer"></media-slider-value>
+                  <media-time-slider-chapter-title class="sr-preview-chapter"></media-time-slider-chapter-title>
+                </div>
+              </media-slider-preview>
+            </media-time-slider>
+          </div>
+
+          <media-controls-group class="sr-bottom-row" aria-label="Playback controls">
+            <media-controls-group class="sr-row-group sr-row-start">
+              <media-play-button class="sr-btn" id="sr-bottom-play">
+                <media-icon family="sitrep" name="restart" class="sr-icon sr-play-restart"></media-icon>
+                <media-icon family="sitrep" name="play" class="sr-icon sr-play-go"></media-icon>
+                <media-icon family="sitrep" name="pause" class="sr-icon sr-play-pause"></media-icon>
+              </media-play-button>
+              <media-tooltip trigger="sr-bottom-play" side="top" class="media-popup media-popup-safe-area sr-tooltip">
+                <media-tooltip-label></media-tooltip-label>
+                <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+              </media-tooltip>
+
+              <div class="sr-volume-cluster">
+                <media-mute-button commandfor="sr-vol-popover" class="sr-btn" id="sr-bottom-mute">
+                  <media-icon family="sitrep" name="volume-off" class="sr-icon sr-vol-off"></media-icon>
+                  <media-icon family="sitrep" name="volume-low" class="sr-icon sr-vol-low"></media-icon>
+                  <media-icon family="sitrep" name="volume-high" class="sr-icon sr-vol-high"></media-icon>
+                </media-mute-button>
+                <media-tooltip trigger="sr-bottom-mute" delay="0" disabled side="top" sticky class="media-popup media-popup-safe-area sr-tooltip">
+                  <media-tooltip-label></media-tooltip-label>
+                  <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+                </media-tooltip>
+                <media-volume-popover open-on-hover delay="50" close-delay="280" side="top" class="media-popup media-popup-safe-area sr-vol-popover" id="sr-vol-popover">
+                  <button type="button" class="sr-vol-readout" data-part="vol-readout" aria-label="Toggle mute">100%</button>
+                  <media-volume-slider class="media-volume-slider sr-vol-slider" orientation="vertical" step="1" large-step="10" wheel-step="5">
+                    <media-slider-track class="media-volume-slider-track sr-vol-track">
+                      <media-slider-fill class="media-volume-slider-fill sr-vol-fill"></media-slider-fill>
+                    </media-slider-track>
+                    <media-slider-thumb class="media-volume-slider-thumb sr-vol-thumb"></media-slider-thumb>
+                    <div class="sr-vol-reticle" aria-hidden="true">
+                      <span class="sr-cursor-corner sr-cc-tl"></span>
+                      <span class="sr-cursor-corner sr-cc-tr"></span>
+                      <span class="sr-cursor-corner sr-cc-bl"></span>
+                      <span class="sr-cursor-corner sr-cc-br"></span>
+                      <span class="sr-cursor-tick sr-ct-t"></span>
+                      <span class="sr-cursor-tick sr-ct-r"></span>
+                      <span class="sr-cursor-tick sr-ct-b"></span>
+                      <span class="sr-cursor-tick sr-ct-l"></span>
+                      <span class="sr-cursor-dot"></span>
+                    </div>
+                  </media-volume-slider>
+                </media-volume-popover>
+              </div>
+
+              <media-time-group class="sr-time-group">
+                <media-time class="sr-time-toggle" type="current" toggle></media-time>
+                <media-time class="sr-time-val" type="current"></media-time>
+                <media-time-separator class="sr-time-sep"></media-time-separator>
+                <media-time class="sr-time-dur" type="duration"></media-time>
+              </media-time-group>
+            </media-controls-group>
+
+            <media-controls-group class="sr-row-group sr-row-end">
+              <sitrep-optic-button class="sr-optic"></sitrep-optic-button>
+
+              <button commandfor="sr-settings-menu" class="sr-btn sr-settings-btn" id="sr-bottom-settings">
+                <media-icon family="sitrep" name="gear" class="sr-icon"></media-icon>
+                <media-text class="sr-sr-only" token="menu.settings">Settings</media-text>
+              </button>
+              <media-tooltip trigger="sr-bottom-settings" side="top" class="media-popup media-popup-safe-area sr-tooltip">
+                <media-text token="menu.settings">Settings</media-text>
+              </media-tooltip>
+
+              <media-menu side="top" align="end" class="media-popup media-popup-safe-area sr-menu-popup" id="sr-settings-menu">
+                <media-menu-content class="sr-menu-content">
+                  <media-menu-item commandfor="sr-menu-quality" class="sr-menu-item">
+                    <media-icon family="sitrep" name="switches" class="sr-menu-icon"></media-icon>
+                    <media-text token="menu.quality">Quality</media-text>
+                    <span class="sr-menu-hint">
+                      <span data-part="value" class="sr-menu-hint-val"></span>
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-chevron"></media-icon>
+                    </span>
+                  </media-menu-item>
+                  <media-menu-content class="sr-menu-content" id="sr-menu-quality">
+                    <media-menu-item class="sr-menu-back">
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-back-chevron"></media-icon>
+                      <media-text token="menu.quality">Quality</media-text>
+                    </media-menu-item>
+                    <media-menu-separator class="sr-menu-sep"></media-menu-separator>
+                    <media-quality-radio-group class="sr-menu-radio-group">
+                      <template>
+                        <media-menu-radio-item class="sr-menu-radio-item">
+                          <span>
+                            <span data-part="label"></span>
+                            <sup data-part="tier" class="sr-menu-tier"></sup>
+                          </span>
+                          <span data-part="badge" class="sr-menu-badge"></span>
+                          <media-menu-item-indicator force-mount class="sr-menu-indicator">
+                            <media-icon family="sitrep" name="check" class="sr-menu-check"></media-icon>
+                          </media-menu-item-indicator>
+                        </media-menu-radio-item>
+                      </template>
+                    </media-quality-radio-group>
+                  </media-menu-content>
+
+                  <media-menu-item commandfor="sr-menu-audio" class="sr-menu-item">
+                    <media-icon family="sitrep" name="speech" class="sr-menu-icon"></media-icon>
+                    <media-text token="menu.audio">Audio</media-text>
+                    <span class="sr-menu-hint">
+                      <span data-part="value" class="sr-menu-hint-val"></span>
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-chevron"></media-icon>
+                    </span>
+                  </media-menu-item>
+                  <media-menu-content class="sr-menu-content" id="sr-menu-audio">
+                    <media-menu-item class="sr-menu-back">
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-back-chevron"></media-icon>
+                      <media-text token="menu.audio">Audio</media-text>
+                    </media-menu-item>
+                    <media-menu-separator class="sr-menu-sep"></media-menu-separator>
+                    <media-audio-track-radio-group class="sr-menu-radio-group">
+                      <template>
+                        <media-menu-radio-item class="sr-menu-radio-item">
+                          <span data-part="label"></span>
+                          <media-menu-item-indicator force-mount class="sr-menu-indicator">
+                            <media-icon family="sitrep" name="check" class="sr-menu-check"></media-icon>
+                          </media-menu-item-indicator>
+                        </media-menu-radio-item>
+                      </template>
+                    </media-audio-track-radio-group>
+                  </media-menu-content>
+
+                  <media-menu-item commandfor="sr-menu-speed" class="sr-menu-item">
+                    <media-icon family="sitrep" name="speed" class="sr-menu-icon"></media-icon>
+                    <media-text token="menu.speed">Speed</media-text>
+                    <span class="sr-menu-hint">
+                      <span data-part="value" class="sr-menu-hint-val"></span>
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-chevron"></media-icon>
+                    </span>
+                  </media-menu-item>
+                  <media-menu-content class="sr-menu-content" id="sr-menu-speed">
+                    <media-menu-item class="sr-menu-back">
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-back-chevron"></media-icon>
+                      <media-text token="menu.speed">Speed</media-text>
+                    </media-menu-item>
+                    <media-menu-separator class="sr-menu-sep"></media-menu-separator>
+                    <media-playback-rate-radio-group class="sr-menu-radio-group">
+                      <template>
+                        <media-menu-radio-item class="sr-menu-radio-item">
+                          <span data-part="label"></span>
+                          <media-menu-item-indicator force-mount class="sr-menu-indicator">
+                            <media-icon family="sitrep" name="check" class="sr-menu-check"></media-icon>
+                          </media-menu-item-indicator>
+                        </media-menu-radio-item>
+                      </template>
+                    </media-playback-rate-radio-group>
+                  </media-menu-content>
+
+                  <media-menu-item commandfor="sr-menu-captions" class="sr-menu-item">
+                    <media-icon family="sitrep" name="captions-off" class="sr-menu-icon"></media-icon>
+                    <media-text token="menu.captions">Captions</media-text>
+                    <span class="sr-menu-hint">
+                      <span data-part="value" class="sr-menu-hint-val"></span>
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-chevron"></media-icon>
+                    </span>
+                  </media-menu-item>
+                  <media-menu-content class="sr-menu-content" id="sr-menu-captions">
+                    <media-menu-item class="sr-menu-back">
+                      <media-icon family="sitrep" name="chevron" class="sr-menu-back-chevron"></media-icon>
+                      <media-text token="menu.captions">Captions</media-text>
+                    </media-menu-item>
+                    <media-menu-separator class="sr-menu-sep"></media-menu-separator>
+                    <media-captions-radio-group class="sr-menu-radio-group">
+                      <template>
+                        <media-menu-radio-item class="sr-menu-radio-item">
+                          <span data-part="label"></span>
+                          <span data-part="badge" class="sr-menu-badge"></span>
+                          <media-menu-item-indicator force-mount class="sr-menu-indicator">
+                            <media-icon family="sitrep" name="check" class="sr-menu-check"></media-icon>
+                          </media-menu-item-indicator>
+                        </media-menu-radio-item>
+                      </template>
+                    </media-captions-radio-group>
+                  </media-menu-content>
+                </media-menu-content>
+              </media-menu>
+
+              <media-fullscreen-button class="sr-btn" id="sr-bottom-fullscreen">
+                <media-icon family="sitrep" name="fullscreen-enter" class="sr-icon sr-fs-enter"></media-icon>
+                <media-icon family="sitrep" name="fullscreen-exit" class="sr-icon sr-fs-exit"></media-icon>
+              </media-fullscreen-button>
+              <media-tooltip trigger="sr-bottom-fullscreen" side="top" class="media-popup media-popup-safe-area sr-tooltip">
+                <media-tooltip-label></media-tooltip-label>
+                <media-tooltip-shortcut class="sr-tooltip-shortcut"></media-tooltip-shortcut>
+              </media-tooltip>
+            </media-controls-group>
+          </media-controls-group>
+        </div>
+      </media-tooltip-group>
+    </media-controls-content>
+  </media-controls>
+
+  <!-- Keyboard shortcuts & gestures -->
+  <media-hotkey keys="Space" action="togglePaused"></media-hotkey>
+  <media-hotkey keys="k" action="togglePaused"></media-hotkey>
+  <media-hotkey keys="m" action="toggleMuted"></media-hotkey>
+  <media-hotkey keys="ArrowRight" action="seekStep"></media-hotkey>
+  <media-hotkey keys="ArrowLeft" action="seekStep"></media-hotkey>
+  <media-hotkey keys="l" action="seekStep"></media-hotkey>
+  <media-hotkey keys="j" action="seekStep"></media-hotkey>
+  <media-hotkey keys="ArrowUp" action="volumeStep"></media-hotkey>
+  <media-hotkey keys="ArrowDown" action="volumeStep"></media-hotkey>
+  <media-hotkey keys="0-9" action="seekToPercent"></media-hotkey>
+  <media-hotkey keys="Home" action="seekToPercent" value="0"></media-hotkey>
+  <media-hotkey keys="End" action="seekToPercent" value="100"></media-hotkey>
+  <media-hotkey keys=">" action="speedUp"></media-hotkey>
+  <media-hotkey keys="<" action="speedDown"></media-hotkey>
+  <media-hotkey keys="f" action="toggleFullscreen"></media-hotkey>
+  <media-hotkey keys="c" action="toggleSubtitles"></media-hotkey>
+  <media-hotkey keys="i" action="togglePictureInPicture"></media-hotkey>
+
+  <media-gesture type="tap" action="togglePaused" pointer="mouse" region="center"></media-gesture>
+  <media-gesture type="tap" action="toggleControls" pointer="touch"></media-gesture>
+  <media-gesture type="doubletap" action="seekStep" region="left"></media-gesture>
+  <media-gesture type="doubletap" action="toggleFullscreen" region="center"></media-gesture>
+  <media-gesture type="doubletap" action="seekStep" region="right"></media-gesture>
+
+  <media-status-announcer class="media-status-announcer sr-announcer"></media-status-announcer>
+
+  <!-- Transient Indicators (Seek chevrons, Volume, Status) -->
+  <div aria-hidden="true" class="media-indicator-group sr-indicator-group">
+    <media-volume-indicator class="media-indicator sr-indicator">
+      <media-volume-indicator-fill class="sr-indicator-fill">
+        <media-icon family="sitrep" name="volume-high" class="sr-ind-icon sr-vol-high"></media-icon>
+        <media-icon family="sitrep" name="volume-low" class="sr-ind-icon sr-vol-low"></media-icon>
+        <media-icon family="sitrep" name="volume-off" class="sr-ind-icon sr-vol-off"></media-icon>
+        <media-volume-indicator-value class="sr-ind-val"></media-volume-indicator-value>
+      </media-volume-indicator-fill>
+    </media-volume-indicator>
+
+    <media-status-indicator actions="toggleSubtitles,toggleFullscreen,togglePictureInPicture" class="media-indicator sr-indicator">
+      <media-icon family="sitrep" name="captions-on" class="sr-ind-icon sr-cap-on"></media-icon>
+      <media-icon family="sitrep" name="captions-off" class="sr-ind-icon sr-cap-off"></media-icon>
+      <media-icon family="sitrep" name="fullscreen-enter" class="sr-ind-icon sr-fs-enter"></media-icon>
+      <media-icon family="sitrep" name="fullscreen-exit" class="sr-ind-icon sr-fs-exit"></media-icon>
+      <media-icon family="sitrep" name="pip-enter" class="sr-ind-icon sr-pip-enter"></media-icon>
+      <media-icon family="sitrep" name="pip-exit" class="sr-ind-icon sr-pip-exit"></media-icon>
+      <media-status-indicator-value class="sr-ind-val"></media-status-indicator-value>
+    </media-status-indicator>
+
+    <media-seek-indicator class="media-indicator sr-indicator sr-seek-indicator">
+      <media-icon family="sitrep" name="chevron" class="sr-ind-icon sr-seek-chevron"></media-icon>
+      <media-icon family="sitrep" name="chevron" class="sr-ind-icon sr-seek-chevron"></media-icon>
+      <media-seek-indicator-value class="sr-ind-val"></media-seek-indicator-value>
+    </media-seek-indicator>
+  </div>
+
+  <!-- Tactical Crosshair Cursor with Target-Lock on Controls -->
+  <sitrep-cursor class="sr-cursor"></sitrep-cursor>
+</media-container>

@@ -1,0 +1,164 @@
+/* SITREP Design Tokens — Monochrome Editorial HUD */
+
+.media-skin[data-theme="sitrep"] {
+  /* Core Palette: Warm Editorial Charcoal & Bone + Liquid Glass */
+  --sr-bg-base: #0c0c0b;
+  --sr-glass-bg: rgba(16, 16, 15, 0.48);
+  --sr-glass-bg-elevated: rgba(18, 18, 17, 0.64);
+  --sr-glass-tint: rgba(234, 230, 223, 0.08);
+  --sr-glass-border: rgba(234, 230, 223, 0.18);
+  --sr-glass-border-strong: rgba(234, 230, 223, 0.36);
+  --sr-glass-highlight: rgba(255, 255, 255, 0.16);
+  --sr-glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.34);
+  --sr-glass-solid: #121210;
+
+  --sr-text: #eae6df;
+  --sr-text-muted: rgba(234, 230, 223, 0.62);
+  --sr-text-dim: rgba(234, 230, 223, 0.34);
+
+  --sr-accent: var(--media-accent-color, #eae6df);
+  --sr-accent-soft: rgba(234, 230, 223, 0.10);
+  --sr-accent-border: rgba(234, 230, 223, 0.42);
+  --sr-accent-foreground: var(--media-accent-text-color, #0c0c0b);
+
+  --sr-track-bg: rgba(234, 230, 223, 0.16);
+  --sr-track-buffer: rgba(234, 230, 223, 0.30);
+  --sr-scrim-top: rgba(12, 12, 11, 0.52);
+  --sr-scrim-bottom: rgba(12, 12, 11, 0.72);
+  --sr-dialog-scrim: rgba(12, 12, 11, 0.84);
+  --sr-scanline-color: rgba(234, 230, 223, 0.10);
+
+  /* Alert Red — used ONLY for alert / error states */
+  --sr-alert: #ff4d3d;
+  --sr-alert-bg: rgba(255, 77, 61, 0.14);
+  --sr-alert-border: rgba(255, 77, 61, 0.50);
+
+  /* Typography */
+  --sr-font-label: 'Chakra Petch', ui-sans-serif, system-ui, sans-serif;
+  --sr-font-data: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Radii & Liquid Glass Blur */
+  --sr-radius-panel: var(--media-border-radius, 0px);
+  --sr-radius-chip: 0px;
+  --sr-radius-control: 0px;
+  --sr-blur: blur(22px) saturate(180%) contrast(105%);
+
+  /* Motion — Design Wiki: hop + expo/reveal + gooey + smooth exit */
+  --sr-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --sr-ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  --sr-ease-gooey: cubic-bezier(0.16, 1, 0.3, 1);
+  --sr-ease-hop: cubic-bezier(0.87, 0, 0.13, 1);
+  --sr-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --sr-dur-enter: 240ms;
+  --sr-dur-reveal: 380ms;
+  --sr-dur-exit: 420ms;
+  --sr-dur-press: 120ms;
+  --sr-dur-boot: 600ms;
+
+  /* Fixed per-element stagger delays on return */
+  --sr-delay-1: 0ms;
+  --sr-delay-2: 35ms;
+  --sr-delay-3: 70ms;
+  --sr-delay-4: 105ms;
+
+  /* Map Video.js public CSS properties */
+  --media-background: var(--sr-bg-base);
+  --media-foreground: var(--sr-text);
+  --media-accent: var(--sr-accent);
+  --media-accent-foreground: var(--sr-accent-foreground);
+  --media-primary: var(--sr-accent);
+  --media-primary-foreground: var(--sr-accent-foreground);
+  --media-muted: var(--sr-track-bg);
+  --media-popover: var(--sr-glass-bg-elevated);
+  --media-popover-foreground: var(--sr-text);
+  --media-popover-boundary-offset: 12px;
+  --media-popover-side-offset: 10px;
+  --media-tooltip-boundary-offset: 12px;
+  --media-tooltip-side-offset: 10px;
+  --media-ring: var(--sr-accent);
+  --media-button-highlight: var(--sr-accent-soft);
+  --media-video-border-radius: var(--media-border-radius, 0px);
+  --media-control-radius: var(--sr-radius-control);
+  --media-controls-radius: var(--sr-radius-panel);
+  --media-menu-item-radius: 0px;
+  --media-popup-radius: 0px;
+  --media-dialog-radius: 0px;
+}
+
+/* Optional HUD Tints */
+.media-skin[data-theme="sitrep"][data-hud-tint="teal"] {
+  --sr-bg-base: #061112;
+  --sr-glass-bg: rgba(6, 17, 18, 0.78);
+  --sr-glass-bg-elevated: rgba(6, 17, 18, 0.90);
+  --sr-glass-tint: rgba(170, 225, 215, 0.06);
+  --sr-glass-border: rgba(170, 225, 215, 0.18);
+  --sr-glass-border-strong: rgba(170, 225, 215, 0.34);
+  --sr-glass-solid: #09181a;
+  --sr-text: #d7efe9;
+  --sr-text-muted: rgba(215, 239, 233, 0.68);
+  --sr-text-dim: rgba(215, 239, 233, 0.40);
+  --sr-accent: #b6f23a;
+  --sr-accent-soft: rgba(182, 242, 58, 0.14);
+  --sr-accent-border: rgba(182, 242, 58, 0.45);
+  --sr-accent-foreground: #061112;
+  --sr-track-bg: rgba(215, 239, 233, 0.16);
+  --sr-track-buffer: rgba(215, 239, 233, 0.28);
+  --sr-scrim-top: rgba(6, 17, 18, 0.56);
+  --sr-scrim-bottom: rgba(6, 17, 18, 0.74);
+  --sr-dialog-scrim: rgba(6, 17, 18, 0.84);
+  --sr-scanline-color: rgba(215, 239, 233, 0.10);
+  --media-ring: #b6f23a;
+}
+
+.media-skin[data-theme="sitrep"][data-hud-tint="amber"] {
+  --sr-bg-base: #120d05;
+  --sr-glass-bg: rgba(18, 13, 5, 0.80);
+  --sr-glass-bg-elevated: rgba(18, 13, 5, 0.92);
+  --sr-glass-tint: rgba(255, 196, 92, 0.06);
+  --sr-glass-border: rgba(255, 196, 92, 0.20);
+  --sr-glass-border-strong: rgba(255, 196, 92, 0.40);
+  --sr-glass-solid: #171106;
+  --sr-text: #f7ebd2;
+  --sr-text-muted: rgba(247, 235, 210, 0.70);
+  --sr-text-dim: rgba(247, 235, 210, 0.42);
+  --sr-accent: #ffb020;
+  --sr-accent-soft: rgba(255, 176, 32, 0.14);
+  --sr-accent-border: rgba(255, 176, 32, 0.48);
+  --sr-accent-foreground: #120d05;
+  --sr-track-bg: rgba(247, 235, 210, 0.16);
+  --sr-track-buffer: rgba(247, 235, 210, 0.28);
+  --sr-scrim-top: rgba(18, 13, 5, 0.56);
+  --sr-scrim-bottom: rgba(18, 13, 5, 0.74);
+  --sr-dialog-scrim: rgba(18, 13, 5, 0.84);
+  --sr-scanline-color: rgba(247, 235, 210, 0.10);
+  --media-ring: #ffb020;
+}
+
+/* Reduced transparency & fallback for environments without backdrop-filter */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .media-skin[data-theme="sitrep"] {
+    --sr-glass-bg: var(--sr-glass-solid);
+    --sr-glass-bg-elevated: var(--sr-glass-solid);
+    --sr-blur: none;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .media-skin[data-theme="sitrep"] {
+    --sr-glass-bg: var(--sr-glass-solid);
+    --sr-glass-bg-elevated: var(--sr-glass-solid);
+    --sr-blur: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .media-skin[data-theme="sitrep"] {
+    --sr-glass-bg: Canvas;
+    --sr-glass-bg-elevated: Canvas;
+    --sr-glass-border: CanvasText;
+    --sr-text: CanvasText;
+    --sr-accent: Highlight;
+    --sr-accent-foreground: HighlightText;
+    --media-ring: Highlight;
+  }
+}

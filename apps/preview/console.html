@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#070807" />
+    <title>Rugged MK-1 // Recon Console</title>
+  </head>
+  <body data-hud-tint="mono">
+    <!-- Background 3D Tactical Vector Field -->
+    <div class="sc-bg" aria-hidden="true">
+      <canvas id="sc-three-canvas"></canvas>
+      <div class="sc-bg-vignette"></div>
+    </div>
+
+    <div class="sc-shell">
+      <!-- Single-Row Top Command Rail -->
+      <header class="sc-topbar">
+        <div class="sc-topbar-left">
+          <span class="sc-status-dot" id="sc-bezel-led" aria-hidden="true"></span>
+          <span class="sc-unit-id" data-term-reveal data-term-speed="fast">RUGGED // MK-1</span>
+          <span class="sc-divider" aria-hidden="true">/</span>
+          <span class="sc-link-state" id="sc-link-state">STANDBY</span>
+        </div>
+
+        <div class="sc-topbar-center" aria-hidden="true">
+          <span id="sc-sector-code" data-term-reveal data-term-speed="fast">SEC-01 // KEPLER RIDGE</span>
+          <span class="sc-divider">/</span>
+          <span id="sc-zulu-clock">ZULU 00:00:00</span>
+        </div>
+
+        <nav class="sc-topbar-nav" aria-label="Console navigation">
+          <div class="sc-tint-switch" role="group" aria-label="Optical spectrum" data-switch="tint">
+            <button type="button" class="sc-chip-btn" data-value="mono" aria-pressed="true">MONO</button>
+            <button type="button" class="sc-chip-btn" data-value="teal" aria-pressed="false">NVG</button>
+            <button type="button" class="sc-chip-btn" data-value="amber" aria-pressed="false">FLIR</button>
+          </div>
+          <a class="sc-top-link" href="#sc-arch">ARCHITECTURE</a>
+          <a class="sc-top-link" href="./workbench.html">WORKBENCH ↗</a>
+        </nav>
+      </header>
+
+      <!-- Main Tactical Console Grid -->
+      <main class="sc-console">
+        <!-- Left Primary Column: Header + Video.js v10 Player + Live Terminal Log -->
+        <section class="sc-primary" aria-labelledby="sc-op-headline">
+          <div class="sc-title-bar">
+            <h1 id="sc-op-headline" class="sc-title" data-term-reveal data-term-speed="hero">RUGGED MK-1</h1>
+            <p class="sc-lead" data-term-reveal data-term-delay="90">
+              Orbital optical intercept terminal running the Video.js v10 zero-radius telemetry skin.
+            </p>
+          </div>
+
+          <!-- Active Feed Header Strip -->
+          <div class="sc-feed-strip">
+            <div class="sc-feed-id">
+              <span class="sc-feed-label">ACTIVE DECK</span>
+              <strong id="sc-active-feed-name" data-term-reveal data-term-speed="fast">COSMIC DAWN // SECTOR 01</strong>
+            </div>
+            <div class="sc-feed-status" id="sc-bezel-status">FEED READY</div>
+          </div>
+
+          <!-- Video.js v10 Player Mount (Untouched Player) -->
+          <div class="sc-player-stage">
+            <div class="sc-player-frame" id="player-mount"></div>
+          </div>
+
+          <!-- Live Terminal Event Stream -->
+          <section class="sc-term-log" aria-label="Live mission log">
+            <div class="sc-term-log-head">
+              <span data-term-reveal data-term-speed="fast">RX // EVENT STREAM</span>
+              <span id="sc-log-pulse">READY</span>
+            </div>
+            <ul class="sc-log-list" id="sc-mission-log" aria-live="polite">
+              <li data-term-reveal data-term-delay="140"><span class="sc-ts">[BOOT]</span> Terminal initialized · Video.js v10 telemetry bound</li>
+              <li data-term-reveal data-term-delay="220"><span class="sc-ts">[DECK]</span> CH-01 Cosmic Dawn mounted in primary optical bay</li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- Right Tactical Rail: Channel Router + Orbital Telemetry + Controls -->
+        <aside class="sc-rail" aria-label="Tactical controls and telemetry">
+          <!-- 01: Feed Matrix -->
+          <section class="sc-rail-block">
+            <div class="sc-rail-head">
+              <h2 class="sc-rail-title" data-term-reveal data-term-speed="fast">01 // FEED MATRIX</h2>
+            </div>
+            <div class="sc-feed-list" role="group" aria-label="Reconnaissance feed selector" data-switch="footage">
+              <button type="button" class="sc-feed-row" data-value="film" aria-pressed="true">
+                <div class="sc-feed-row-top">
+                  <span class="sc-ch">CH-01</span>
+                  <span class="sc-ch-name">COSMIC DAWN</span>
+                  <span class="sc-ch-state" data-part="status">LIVE</span>
+                </div>
+                <div class="sc-ch-meta">ORBITAL IR · 4 PHASES · VTT</div>
+              </button>
+
+              <button type="button" class="sc-feed-row" data-value="bright" aria-pressed="false">
+                <div class="sc-feed-row-top">
+                  <span class="sc-ch">CH-02</span>
+                  <span class="sc-ch-name">HIGH ALBEDO</span>
+                  <span class="sc-ch-state" data-part="status">READY</span>
+                </div>
+                <div class="sc-ch-meta">DAYLIGHT OPTIC · GLARE TEST</div>
+              </button>
+
+              <button type="button" class="sc-feed-row" data-value="dark" aria-pressed="false">
+                <div class="sc-feed-row-top">
+                  <span class="sc-ch">CH-03</span>
+                  <span class="sc-ch-name">NIGHT RECON</span>
+                  <span class="sc-ch-state" data-part="status">READY</span>
+                </div>
+                <div class="sc-ch-meta">LOW-LUX IR · SHADOW TEST</div>
+              </button>
+            </div>
+          </section>
+
+          <!-- 02: Orbital Telemetry & 3D Camera -->
+          <section class="sc-rail-block">
+            <div class="sc-rail-head">
+              <h2 class="sc-rail-title" data-term-reveal data-term-speed="fast">02 // ORBITAL VECTOR</h2>
+              <span class="sc-orbit-pct" id="sc-sat-sync">ORBIT 0%</span>
+            </div>
+
+            <dl class="sc-kv-list">
+              <div class="sc-kv">
+                <dt>COORDS</dt>
+                <dd id="sc-sector-coords">34°14'08"N 118°09'42"W</dd>
+              </div>
+              <div class="sc-kv">
+                <dt>ALTITUDE</dt>
+                <dd id="sc-sector-alt">ALT 412.8 KM // ORBITAL</dd>
+              </div>
+            </dl>
+
+            <div class="sc-cam-group" role="group" aria-label="3D Vector Camera" data-switch="camera">
+              <button type="button" class="sc-chip-btn" data-cam="orbit" aria-pressed="true">ORBIT</button>
+              <button type="button" class="sc-chip-btn" data-cam="top" aria-pressed="false">SAT-TOP</button>
+              <button type="button" class="sc-chip-btn" data-cam="low" aria-pressed="false">LOW</button>
+            </div>
+          </section>
+
+          <!-- 03: Operator Keybindings -->
+          <section class="sc-rail-block">
+            <div class="sc-rail-head">
+              <h2 class="sc-rail-title" data-term-reveal data-term-speed="fast">03 // KEYBINDINGS</h2>
+            </div>
+            <ul class="sc-keys">
+              <li><kbd>SPACE</kbd> <span data-term-reveal data-term-delay="80">Play / Pause</span></li>
+              <li><kbd>J / L</kbd> <span data-term-reveal data-term-delay="120">Seek ±10s</span></li>
+              <li><kbd>M / ↑↓</kbd> <span data-term-reveal data-term-delay="160">Mute / Volume</span></li>
+              <li><kbd>C / F</kbd> <span data-term-reveal data-term-delay="200">Captions / Fullscreen</span></li>
+              <li><kbd>ESC</kbd> <span data-term-reveal data-term-delay="240">Close menu &amp; restore focus</span></li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+
+      <!-- System Architecture Spec Table (Below the fold, zero card clutter) -->
+      <section id="sc-arch" class="sc-arch" aria-labelledby="sc-arch-title">
+        <div class="sc-arch-head">
+          <h2 id="sc-arch-title" class="sc-arch-title" data-term-reveal>SYSTEM ARCHITECTURE</h2>
+          <p class="sc-arch-sub" data-term-reveal data-term-delay="80">Five live Video.js v10 subsystems bound directly to the media store.</p>
+        </div>
+
+        <div class="sc-spec-table" role="list">
+          <div class="sc-spec-row" role="listitem">
+            <span class="sc-spec-id">SYS-01</span>
+            <strong class="sc-spec-name" data-term-reveal data-term-speed="fast">TELEMETRY STRIP</strong>
+            <span class="sc-spec-desc" data-term-reveal data-term-delay="60">Real-time playback state, tabular timecode, rendition resolution, and speed readout.</span>
+          </div>
+          <div class="sc-spec-row" role="listitem">
+            <span class="sc-spec-id">SYS-02</span>
+            <strong class="sc-spec-name" data-term-reveal data-term-speed="fast">RULER &amp; PROGRESS</strong>
+            <span class="sc-spec-desc" data-term-reveal data-term-delay="100">Tick ruler with VTT chapter segments, percentage indicator, and hover scrub preview.</span>
+          </div>
+          <div class="sc-spec-row" role="listitem">
+            <span class="sc-spec-id">SYS-03</span>
+            <strong class="sc-spec-name" data-term-reveal data-term-speed="fast">OPTIC RETICLE + LOCK</strong>
+            <span class="sc-spec-desc" data-term-reveal data-term-delay="140">Center rangefinder reticle paired with a magnetic crosshair cursor that snaps to controls.</span>
+          </div>
+          <div class="sc-spec-row" role="listitem">
+            <span class="sc-spec-id">SYS-04</span>
+            <strong class="sc-spec-name" data-term-reveal data-term-speed="fast">AUDIO LED REVEAL</strong>
+            <span class="sc-spec-desc" data-term-reveal data-term-delay="180">Mute toggle with LED ignition flicker and vertical Liquid Glass volume slider.</span>
+          </div>
+          <div class="sc-spec-row sc-spec-alert" role="listitem">
+            <span class="sc-spec-id">SYS-05</span>
+            <strong class="sc-spec-name" data-term-reveal data-term-speed="fast">CARRIER LOST // FAILSAFE</strong>
+            <span class="sc-spec-desc" data-term-reveal data-term-delay="220">Buffering state with CARRIER LOST // REACQUIRING readout and alert-red status indicator.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Minimal Footer -->
+      <footer class="sc-footer">
+        <span>Built by <a href="https://pedrocosta.design" target="_blank" rel="noreferrer">Pedro Costa</a></span>
+        <span>Apache 2.0</span>
+        <a id="code-link" href="https://github.com/videojs/video.js" target="_blank" rel="noreferrer">Video.js Source ↗</a>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/showcase/main.ts"></script>
+  </body>
+</html>
